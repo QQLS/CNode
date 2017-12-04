@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
+import React from 'react'
+import { StackNavigator } from 'react-navigation'
 
-export default class Message extends Component {
-  render() {
-    return (
-      <Text>I'm message page</Text>
-    )
+import Message from './Screen'
+
+export default StackNavigator({
+  Message: {
+    screen: Message
   }
-}
+}, {
+  initialRouteName: 'Message'
+})

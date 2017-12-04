@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
+import React from 'react'
+import { StackNavigator } from 'react-navigation'
 
-export default class Publish extends Component {
-  render() {
-    return (
-      <Text>I'm publish page</Text>
-    )
+import Publish from './Screen'
+
+export default StackNavigator({
+  Publish: {
+    screen: Publish
   }
-}
+}, {
+    initialRouteName: 'Publish'
+  })

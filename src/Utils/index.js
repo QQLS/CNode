@@ -12,4 +12,16 @@ export function formatTime(replayDate) {
   else return Math.floor(offset / (3600 * 24 * 30 * 12)) + '年前'
 }
 
+export function storeToken(token) {
+  global.accessToken = JSON.stringify(token)
+}
+
+export function getToken() {
+  return JSON.parse(global.accessToken)
+}
+
+export function removeToken() {
+  global.accessToken = null
+}
+
 

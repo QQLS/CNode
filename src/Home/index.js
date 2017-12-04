@@ -1,46 +1,12 @@
-import React, { Component } from 'react'
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view'
+import React from 'react'
+import { StackNavigator } from 'react-navigation'
 
-import TabViewItem from './TabViewItem'
+import Home from './Screen'
 
-const TabViews = [
-  { tabLabel: '全部', tab: ''},
-  { tabLabel: '精华', tab: 'good'},
-  { tabLabel: '分享', tab: 'share'},
-  { tabLabel: '问答', tab: 'ask'},
-  { tabLabel: '招聘', tab: 'job'},
-]
-
-export default class Home extends Component {
-  static navigationOptions = {
-    header: null
+export default StackNavigator({
+  Home: {
+    screen: Home
   }
-
-  render() {
-    global.storage.save({
-      key: 'userName', 
-      data: '428a207c-070c-4491-bd75-b8bb7d6f4e34'
-    })
-    .then(response => {
-      console.log('正确', response)
-    })
-    .catch(error => {
-      console.log('错误', error)
-    })
-    global.storage.remove({
-      key: 'userName'
-    })
-    .then(response => {
-      console.log('正确', response)
-    })
-    .catch(error => {
-      console.log('错误', error)
-    })
-
-    return (
-      <ScrollableTabView renderTabBar={() => <DefaultTabBar style={{marginTop: 20}} />}>
-        { TabViews.map(tabView => <TabViewItem key={tabView.tab} { ...tabView } />) }
-      </ScrollableTabView>
-    )
-  }
-}
+}, {
+  initialRouteName: 'Home'
+});

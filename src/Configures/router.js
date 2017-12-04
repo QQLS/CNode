@@ -13,22 +13,9 @@ import Profile from '../Profile'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
-const configureNavigator = (route, screen) => {
-  const NavRouteConfigs = {
-    [route]: {
-      screen: screen
-    }
-  };
-
-  const NavNavigatorConfigs = {
-  };
-
-  return StackNavigator(NavRouteConfigs, NavNavigatorConfigs);
-}
-
-const configureTabItem = (route, screen, tabBarLabel, tabBarImage) => {
+const configureTabItem = (screen, tabBarLabel, tabBarImage) => {
   return {
-    screen: configureNavigator(route, screen), // 每个 TabItem 都有一个单独的 Navigator
+    screen: screen, // 每个 TabItem 都有一个单独的 Navigator
     navigationOptions: {
       tabBarLabel: tabBarLabel,
       tabBarIcon: ({ focused, tintColor }) => {
@@ -36,14 +23,14 @@ const configureTabItem = (route, screen, tabBarLabel, tabBarImage) => {
       }
     }
   }
-};
+}
 
 const TabRouteConfigs = {
-  Home: configureTabItem('Home', Home, '首页', 'ios-home'),
-  Publish: configureTabItem('Publish', Publish, '发布', 'ios-book'),
-  Message: configureTabItem('Message', Message, '消息', 'ios-mail-open'),
-  Profile: configureTabItem('Profile', Profile, '我的', 'ios-happy'),
-};
+  Home: configureTabItem(Home, '首页', 'ios-home'),
+  Publish: configureTabItem(Publish, '发布', 'ios-book'),
+  Message: configureTabItem(Message, '消息', 'ios-mail-open'),
+  Profile: configureTabItem(Profile, '我的', 'ios-happy'),
+}
 
 const TabNavigatorConfigs = {
   initialRouteName: 'Home',
@@ -51,6 +38,6 @@ const TabNavigatorConfigs = {
   lazy: true,
   tabBarPosition: 'bottom',
   swipeEnabled: false
-};
+}
 
-export default TabNavigator(TabRouteConfigs, TabNavigatorConfigs);
+export default TabNavigator(TabRouteConfigs, TabNavigatorConfigs)

@@ -3,14 +3,25 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { BASE_URL, TOPICS } from '../Configures/api'
-import request from '../Utils/request'
-import { formatTime } from '../Utils'
+import { BASE_URL, TOPICS } from '../../Configures/api'
+import request from '../../Utils/request'
 
 export default class TabViewRow extends Component {
 
   static propTypes = {
     data: PropTypes.object.isRequired
+  }
+
+  _formatTime(replayDate) {
+    const now = (new Date()).valueOf()
+    const pre = (new Date(replayDate)).valueOf()
+    const offset = Math.floor((now - pre) / 1000)
+    if (offset < 60) return offset + '秒前'
+    else if (offset < 3600) return Math.floor(offset / 60) + '分钟前'
+    else if (offset < 3600 * 24) return Math.floor(offset / 3600) + '小时前'
+    else if (offset < 3600 * 24 * 30) return Math.floor(offset / (3600 * 24)) + '天前'
+    else if (offset < 3600 * 24 * 30 * 12) return Math.floor(offset / (3600 * 24 * 30)) + '个月前'
+    else return Math.floor(offset / (3600 * 24 * 30 * 12)) + '年前'
   }
 
   render() {
@@ -23,7 +34,7 @@ export default class TabViewRow extends Component {
             <Text style={styles.publishAuthor}>{data.author.loginname}</Text>
             <Text style={styles.publishTip}>
               发布于:
-              <Text style={styles.publishTime}>{formatTime(data.create_at)}</Text>
+              <Text style={styles.publishTime}>{this._formatTime(data.create_at)}</Text>
             </Text>
           </View>
         </View>
@@ -39,7 +50,7 @@ export default class TabViewRow extends Component {
               <Text style={styles.countValue}>{data.reply_count}</Text>
             </View>
           </View>
-          <Text style={styles.time}>{'最新动态: ' + formatTime(data.last_reply_at)}</Text>
+          <Text style={styles.time}>{'最新动态: ' + this._formatTime(data.last_reply_at)}</Text>
         </View>
       </View>
     )

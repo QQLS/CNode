@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { BASE_URL, TOPICS } from '../Configures/api'
-import request from '../Utils/request'
+import { BASE_URL, TOPICS } from '../../Configures/api'
+import request from '../../Utils/request'
 
 import TabViewRow from './TabViewRow'
 
