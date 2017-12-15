@@ -7,8 +7,14 @@ import {
   Vibration,
   TextInput,
   StyleSheet,
+  NativeModules,
   TouchableHighlight,
+  LayoutAnimation,
 } from 'react-native'
+
+const { UIManager } = NativeModules
+
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
 
 import Camera from 'react-native-camera'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -83,6 +89,8 @@ export default class Login extends React.Component {
     if (this.state.selectType === selectType) {
       return
     }
+
+    LayoutAnimation.spring()
     this.setState({
       token: null, // 每次切换都要将 token 置位 null
       selectType: selectType,
