@@ -2,12 +2,12 @@ import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
-import { BASE_URL, USER_DETAIL } from '../../Configures/api'
+import { BASE_URL, USER_DETAIL, LOGIN } from '../../Configures/api'
 import request from '../../Utils/request'
-import { formatTime, getToken, removeToken } from '../../Utils'
+import { formatTime, getToken, storeToken } from '../../Utils'
 
 import TabViewItem from '../Subpage/TabViewItem'
-import Login from '../../Others/Login'
+import Tip from '../../Others/Tip'
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -22,24 +22,50 @@ export default class Profile extends React.Component {
   }
 
   componentDidMount() {
-    removeToken()
-    request.get(BASE_URL + USER_DETAIL('qqls'))
-      .then(response => {
-        if (response && response.success) {
-          this.setState({
-            data: response.data
-          })
-        }
+    this.login()
+  }
+
+  login(accesstoken = getToken()) {
+    console.log('accessToken:', accesstoken)
+    if (accesstoken && accesstoken.length) {
+      request.post(BASE_URL + LOGIN, {
+        accesstoken,
       })
-      .catch(error => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log('error', error)
+        })
+        .then((response) => {
+          // { success: false, error_msg: "错误的accessToken" }
+          // { success: true, loginname: "QQLS", avatar_url: "https://avatars1.githubusercontent.com/u/10087491?v=4&s=120", id: "5a1ce4ba110a338547d6e282" }
+          if (response && response.success) {
+            // 全局记录, 同时对 accesstoken 进行存储
+            storeToken(accesstoken)
+            global.storage.save({
+              key: 'accesstoken',
+              data: accesstoken
+            })
+            return request.get(BASE_URL + USER_DETAIL(response.loginname))
+          }
+        })
+        .then(response => {
+          if (response && response.success) {
+            this.setState({
+              data: response.data
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 
   render() {
     const accessToken = getToken()
     if (!accessToken || accessToken.length === 0) {
-      return <Login />
+      return <Tip onLogin={(token) => {
+        this.login(token)
+      }} />
     }
 
     const data = this.state.data

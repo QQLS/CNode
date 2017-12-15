@@ -19,4 +19,4 @@ export const CANCEL_TOPICS = '/topic_collect/de_collect'
 /** 用户详情 */
 export const USER_DETAIL = (loginName) => '/user/' + loginName
 /** 验证 accessToken 的正确性, 相当于是登录 */
-export const LOGIN = '/accesstoken/'
+export const LOGIN = '/accesstoken'

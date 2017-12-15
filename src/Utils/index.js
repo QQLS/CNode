@@ -13,15 +13,15 @@ export function formatTime(replayDate) {
 }
 
 export function storeToken(token) {
-  global.accessToken = JSON.stringify(token)
+  global.accesstoken = JSON.stringify(token)
 }
 
 export function getToken() {
-  return JSON.parse(global.accessToken)
+  return JSON.parse(global.accesstoken)
 }
 
 export function removeToken() {
-  global.accessToken = null
+  global.accesstoken = null
 }
 
 

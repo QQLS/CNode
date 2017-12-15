@@ -21,20 +21,17 @@ export default class App extends React.Component {
 
   componentDidMount() {
     storage.load({
-      key: 'accessToken'
+      key: 'accesstoken'
     }).then(response => {
       storeToken(response)
-      console.log('response', response)
       NativeModules.SplashScreen.hide()
     }).catch(error => {
       storeToken(null)
-      console.log('error', response)
       NativeModules.SplashScreen.hide()
     })
   }
   
   render() {
-    Promise
     return <View style={{flex: 1}}><Router /></View>
   }
 }
